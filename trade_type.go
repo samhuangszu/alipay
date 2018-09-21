@@ -2,7 +2,7 @@ package alipay
 
 import "encoding/json"
 
-////////////////////////////////////////////////////////////////////////////////
+// TradePay 支付
 type TradePay struct {
 	NotifyURL string `json:"-"`
 	ReturnURL string `json:"-"`

@@ -1,13 +1,13 @@
 package alipay
 
 import (
+	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
 // TradeWapPay https://docs.open.alipay.com/api_1/alipay.trade.wap.pay/
-func (this *AliPay) TradeWapPay(param AliPayTradeWapPay) (url *url.URL, err error) {
+func (this *AliPay) TradeWapPay(param AliPayTradeWapPay) (resp []byte, err error) {
 	p, err := this.URLValues(param)
 	if err != nil {
 		return nil, err
@@ -29,6 +29,6 @@ func (this *AliPay) TradeWapPay(param AliPayTradeWapPay) (url *url.URL, err erro
 	if err != nil {
 		return nil, err
 	}
-	url = rep.Request.URL
-	return url, err
+	data, err := ioutil.ReadAll(rep.Body)
+	return data, err
 }
