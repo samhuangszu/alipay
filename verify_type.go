@@ -2,8 +2,8 @@ package alipay
 
 import "encoding/xml"
 
-// AliVerify 验证网关
-type AliVerify struct {
+// AliBizContent 验证网关
+type AliBizContent struct {
 	XMLName     xml.Name `xml:"XML"`
 	AppID       string   `xml:"AppId"`
 	FromUserID  string   `xml:"FromUserId"`
@@ -13,6 +13,15 @@ type AliVerify struct {
 	ActionParam string   `xml:"ActionParam"`
 	AgreementID string   `xml:"AgreementId"`
 	AccountNo   string   `xml:"AccountNo"`
+}
+
+// AliForm 阿里返回
+type AliForm struct {
+	Sign       string `param:"sign"`
+	Charset    string `param:"charset"`
+	BizContent string `param:"biz_content"`
+	SignType   string `param:"sign_type"`
+	Service    string `param:"service"`
 }
 
 // AliVerifyResp 返回给阿里

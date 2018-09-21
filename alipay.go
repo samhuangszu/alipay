@@ -21,16 +21,18 @@ type AliPay struct {
 	notifyVerifyDomain string
 	partnerId          string
 	privateKey         []byte
+	appPublicKey       []byte
 	AliPayPublicKey    []byte
 	Client             *http.Client
 	SignType           string
 }
 
-func New(appId, partnerId, aliPublicKey, privateKey string, isProduction bool) (client *AliPay) {
+func New(appId, partnerId, aliPublicKey, privateKey string, appPublicKey string, isProduction bool) (client *AliPay) {
 	client = &AliPay{}
 	client.appId = appId
 	client.partnerId = partnerId
 	client.privateKey = encoding.ParsePrivateKey(privateKey)
+	client.appPublicKey = encoding.ParsePublicKey(appPublicKey)
 	client.AliPayPublicKey = encoding.ParsePublicKey(aliPublicKey)
 	client.Client = http.DefaultClient
 	if isProduction {
@@ -77,6 +79,23 @@ func (this *AliPay) URLValues(param AliPayParam) (value url.Values, err error) {
 	}
 	p.Add("sign", sign)
 	return p, nil
+}
+
+// AloneSign 只能values存在的值进行签名
+func (this *AliPay) AloneSign(values url.Values) (url.Values, error) {
+	var hash crypto.Hash
+	if this.SignType == K_SIGN_TYPE_RSA {
+		hash = crypto.SHA1
+	} else {
+		hash = crypto.SHA256
+	}
+	sign, err := signWithPKCS1v15(values, this.privateKey, hash)
+	if err != nil {
+		return nil, err
+	}
+	values.Add("sign", sign)
+	values.Add("sign_type", this.SignType)
+	return values, nil
 }
 
 func (this *AliPay) doRequest(method string, param AliPayParam, results interface{}) (err error) {
@@ -167,6 +186,21 @@ func parserJSONSource(rawData string, nodeName string, nodeIndex int) (content s
 	sign = sign[:signEndIndex]
 
 	return content, sign
+}
+
+func signWithString(source string, privateKey []byte, signType string) (s string, err error) {
+	var hash crypto.Hash
+	if signType == K_SIGN_TYPE_RSA {
+		hash = crypto.SHA1
+	} else {
+		hash = crypto.SHA256
+	}
+	sig, err := encoding.SignPKCS1v15([]byte(source), privateKey, hash)
+	if err != nil {
+		return "", err
+	}
+	s = base64.StdEncoding.EncodeToString(sig)
+	return s, nil
 }
 
 func signWithPKCS1v15(param url.Values, privateKey []byte, hash crypto.Hash) (s string, err error) {

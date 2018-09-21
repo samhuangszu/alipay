@@ -20,7 +20,7 @@ var (
 var client *alipay.AliPay
 
 func init() {
-	client = alipay.New(appID, partnerID, aliPublicKey, appPrivateKey, false)
+	client = alipay.New(appID, partnerID, aliPublicKey, appPrivateKey, appPublicKey, false)
 }
 
 func TestAliPay_TradeCreate(t *testing.T) {
