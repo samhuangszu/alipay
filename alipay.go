@@ -20,9 +20,9 @@ type AliPay struct {
 	apiDomain          string
 	notifyVerifyDomain string
 	partnerId          string
-	privateKey         []byte
+	appPrivateKey      []byte
 	appPublicKey       []byte
-	AliPayPublicKey    []byte
+	aliPayPublicKey    []byte
 	Client             *http.Client
 	SignType           string
 }
@@ -31,9 +31,9 @@ func New(appId, partnerId, aliPublicKey, privateKey string, appPublicKey string,
 	client = &AliPay{}
 	client.appId = appId
 	client.partnerId = partnerId
-	client.privateKey = encoding.ParsePrivateKey(privateKey)
+	client.appPrivateKey = encoding.ParsePrivateKey(privateKey)
 	client.appPublicKey = encoding.ParsePublicKey(appPublicKey)
-	client.AliPayPublicKey = encoding.ParsePublicKey(aliPublicKey)
+	client.aliPayPublicKey = encoding.ParsePublicKey(aliPublicKey)
 	client.Client = http.DefaultClient
 	if isProduction {
 		client.apiDomain = K_ALI_PAY_PRODUCTION_API_URL
@@ -73,7 +73,7 @@ func (this *AliPay) URLValues(param AliPayParam) (value url.Values, err error) {
 	} else {
 		hash = crypto.SHA256
 	}
-	sign, err := signWithPKCS1v15(p, this.privateKey, hash)
+	sign, err := signWithPKCS1v15(p, this.appPrivateKey, hash)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func (this *AliPay) AloneSign(values url.Values) (url.Values, error) {
 	} else {
 		hash = crypto.SHA256
 	}
-	sign, err := signWithPKCS1v15(values, this.privateKey, hash)
+	sign, err := signWithPKCS1v15(values, this.appPrivateKey, hash)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 		return err
 	}
 
-	if len(this.AliPayPublicKey) > 0 {
+	if len(this.aliPayPublicKey) > 0 {
 		var dataStr = string(data)
 
 		var rootNodeName = strings.Replace(param.APIName(), ".", "_", -1) + k_RESPONSE_SUFFIX
@@ -147,7 +147,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 		}
 
 		if sign != "" {
-			if ok, err := verifyData([]byte(content), this.SignType, sign, this.AliPayPublicKey); ok == false {
+			if ok, err := verifyData([]byte(content), this.SignType, sign, this.aliPayPublicKey); ok == false {
 				return err
 			}
 		}
@@ -166,7 +166,7 @@ func (this *AliPay) DoRequest(method string, param AliPayParam, results interfac
 }
 
 func (this *AliPay) VerifySign(data url.Values) (ok bool, err error) {
-	return verifySign(data, this.AliPayPublicKey)
+	return verifySign(data, this.aliPayPublicKey)
 }
 
 func parserJSONSource(rawData string, nodeName string, nodeIndex int) (content string, sign string) {

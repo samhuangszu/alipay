@@ -53,7 +53,7 @@ func (this *AliPay) NotifyVerify(notifyId string) bool {
 }
 
 func (this *AliPay) GetTradeNotification(req *http.Request) (*TradeNotification, error) {
-	return GetTradeNotification(req, this.AliPayPublicKey)
+	return GetTradeNotification(req, this.aliPayPublicKey)
 }
 
 func GetTradeNotification(req *http.Request, aliPayPublicKey []byte) (noti *TradeNotification, err error) {
