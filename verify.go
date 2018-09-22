@@ -1,9 +1,10 @@
 package alipay
 
 import (
-	"encoding/xml"
 	"errors"
 	"net/url"
+
+	"github.com/samhuangszu/alipay/encoding"
 )
 
 // VerifyGateWay 网关验证
@@ -17,7 +18,7 @@ func (c *AliPay) VerifyGateWay(values url.Values) (string, error) {
 		return "", errors.New("biz_content 为空")
 	}
 	charset := values.Get("charset")
-	ok, err := c.VerifySign(values)
+	ok, err := c.VerifySign(values, true)
 	if err != nil {
 		return "", err
 	}
@@ -29,19 +30,15 @@ func (c *AliPay) VerifyGateWay(values url.Values) (string, error) {
 
 // VerifyRespXML 返回xml字符串
 func (c *AliPay) VerifyRespXML(bizContent string, signType string, charset string, result bool) (string, error) {
-	aliBizContent := &AliBizContent{}
-	err := xml.Unmarshal([]byte(bizContent), aliBizContent)
-	if err != nil {
-		return "", err
-	}
 	// 组装XML
 	xml := ""
+	publicKey := encoding.OrginPublicKey(string(c.appPublicKey))
 	if result == true {
-		xml = "<success>true</success><biz_content>" + string(c.aliPayPublicKey) + "</biz_content>"
+		xml = "<success>true</success><biz_content>" + publicKey + "</biz_content>"
 	} else {
-		xml = "<success>false</success><error_code>VERIFY_FAILED</error_code><biz_content>" + string(c.aliPayPublicKey) + "</biz_content>"
+		xml = "<success>false</success><error_code>VERIFY_FAILED</error_code><biz_content>" + publicKey + "</biz_content>"
 	}
-	sign, err := signWithString(xml, c.aliPayPublicKey, signType)
+	sign, err := signWithString(xml, c.appPrivateKey, signType)
 	if err != nil {
 		return "", err
 	}

@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -12,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/smartwalle/alipay/encoding"
+	"github.com/samhuangszu/alipay/encoding"
 )
 
 type AliPay struct {
@@ -165,8 +166,8 @@ func (this *AliPay) DoRequest(method string, param AliPayParam, results interfac
 	return this.doRequest(method, param, results)
 }
 
-func (this *AliPay) VerifySign(data url.Values) (ok bool, err error) {
-	return verifySign(data, this.aliPayPublicKey)
+func (this *AliPay) VerifySign(data url.Values, hasSignType ...bool) (ok bool, err error) {
+	return verifySign(data, this.aliPayPublicKey, hasSignType...)
 }
 
 func parserJSONSource(rawData string, nodeName string, nodeIndex int) (content string, sign string) {
@@ -197,6 +198,7 @@ func signWithString(source string, privateKey []byte, signType string) (s string
 	}
 	sig, err := encoding.SignPKCS1v15([]byte(source), privateKey, hash)
 	if err != nil {
+		fmt.Printf("alipay.signWithString error:%s", err.Error())
 		return "", err
 	}
 	s = base64.StdEncoding.EncodeToString(sig)
@@ -225,11 +227,11 @@ func signWithPKCS1v15(param url.Values, privateKey []byte, hash crypto.Hash) (s 
 	return s, nil
 }
 
-func VerifySign(data url.Values, key []byte) (ok bool, err error) {
-	return verifySign(data, key)
+func VerifySign(data url.Values, key []byte, hasSignType ...bool) (ok bool, err error) {
+	return verifySign(data, key, hasSignType...)
 }
 
-func verifySign(data url.Values, key []byte) (ok bool, err error) {
+func verifySign(data url.Values, key []byte, hasSignType ...bool) (ok bool, err error) {
 	sign := data.Get("sign")
 	signType := data.Get("sign_type")
 
@@ -242,7 +244,9 @@ func verifySign(data url.Values, key []byte) (ok bool, err error) {
 			keys = append(keys, key)
 		}
 	}
-
+	if len(hasSignType) > 0 && hasSignType[0] == true && len(signType) > 0 {
+		keys = append(keys, "sign_type")
+	}
 	sort.Strings(keys)
 
 	var pList = make([]string, 0, 0)
@@ -253,7 +257,6 @@ func verifySign(data url.Values, key []byte) (ok bool, err error) {
 		}
 	}
 	var s = strings.Join(pList, "&")
-
 	return verifyData([]byte(s), signType, sign, key)
 }
 

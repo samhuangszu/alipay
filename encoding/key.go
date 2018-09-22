@@ -5,10 +5,12 @@ import (
 	"strings"
 )
 
+// ParsePublicKey 转成PEM
 func ParsePublicKey(raw string) (result []byte) {
 	return parseKey(raw, "-----BEGIN PUBLIC KEY-----", "-----END PUBLIC KEY-----")
 }
 
+// ParsePrivateKey 转成PEM
 func ParsePrivateKey(raw string) (result []byte) {
 	return parseKey(raw, "-----BEGIN RSA PRIVATE KEY-----", "-----END RSA PRIVATE KEY-----")
 }
@@ -45,4 +47,24 @@ func parseKey(raw, prefix, suffix string) (result []byte) {
 	}
 	buf.WriteString(suffix)
 	return buf.Bytes()
+}
+
+// OrginPublicKey 返回字符串
+func OrginPublicKey(raw string) string {
+	return orginKey(raw, "-----BEGIN PUBLIC KEY-----", "-----END PUBLIC KEY-----")
+}
+
+// OrginPrivateKey 返回字符串
+func OrginPrivateKey(raw string) string {
+	return orginKey(raw, "-----BEGIN RSA PRIVATE KEY-----", "-----END RSA PRIVATE KEY-----")
+}
+
+func orginKey(raw, prefix, suffix string) string {
+	raw = strings.Replace(raw, prefix, "", 1)
+	raw = strings.Replace(raw, suffix, "", 1)
+	raw = strings.Replace(raw, " ", "", -1)
+	raw = strings.Replace(raw, "\n", "", -1)
+	raw = strings.Replace(raw, "\r", "", -1)
+	raw = strings.Replace(raw, "\t", "", -1)
+	return raw
 }
