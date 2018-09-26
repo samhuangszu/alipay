@@ -8,7 +8,7 @@ import (
 
 var (
 	appID     = "2018070460555345"
-	partnerID = "2088102169227503"
+	partnerID = "2088812454567732"
 
 	// RSA2(SHA256)
 	aliPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmZB8N5J3zxakNtxZ0vw3v3uLDW1cVC2sqH+G4YioeMGAjAHbxBYj+LKPTvS6GWOy8+lk+y3Kpg1F+z68ggl4vqYATiugFkppZihN0Gv1DeHoWWhH7uRAQJ4zAx6HO3NJro6bZrH8Co1Mwt9eb0NqmFWt1B1PJ6vIyBUF82FtMWO09WUS/NdIEHuTRIANyfqQqkyy32wApdQSonItHoQ5ThvEYpRMGx8bc1fuYnnF9vawPc5ipieg7uHYw+RRVx6Qb3WOUtP9xKrwYlazT1VUSdfNvMRzBk9kHMxRpp8kj3embvxcN4BrkmP9FTCb8hZopGsFdKcc74g96EYkVerrfQIDAQAB"
@@ -25,7 +25,7 @@ func init() {
 
 func TestAliPay_TradeCreate(t *testing.T) {
 	// t.Log("========== TradeWapPay ==========")
-	var p = alipay.AliPayTradeCreate{}
+	var p = alipay.AliPayTradeAppPay{}
 	p.NotifyURL = "http://203.86.24.181:3000/alipay"
 	// p.ReturnURL = "http://203.86.24.181:3000"
 	p.Subject = "修正了中文的 Bug"
@@ -33,9 +33,8 @@ func TestAliPay_TradeCreate(t *testing.T) {
 	p.TotalAmount = "10.00"
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
 	// p.BuyerId = "2088102147948060"
-	data, err := client.TradeCreate(p)
+	data, err := client.TradeAppPay(p)
 	t.Log(data)
-	t.Error(data)
 	if err != nil {
 		t.FailNow()
 	}
