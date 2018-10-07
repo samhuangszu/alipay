@@ -408,6 +408,14 @@ type AliPayTradeCreateResponse struct {
 	Sign string `json:"sign"`
 }
 
+// IsSuccess 返回成功
+func (c AliPayTradeCreateResponse) IsSuccess() bool {
+	if c.AliPayTradeCreateResponse.Code == K_SUCCESS_CODE {
+		return true
+	}
+	return false
+}
+
 type ExtendParamsItem struct {
 	SysServiceProviderId string `json:"sys_service_provider_id"`
 	HbFqNum              string `json:"hb_fq_num"`

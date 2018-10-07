@@ -103,6 +103,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 	var buf io.Reader
 	if param != nil {
 		p, err := this.URLValues(param)
+		fmt.Println("alipay.doRequest header:" + fmt.Sprintf("%v", p))
 		if err != nil {
 			return err
 		}
@@ -127,6 +128,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 	if err != nil {
 		return err
 	}
+	fmt.Println("alipay method:" + method + "resp:" + string(data))
 
 	if len(this.aliPayPublicKey) > 0 {
 		var dataStr = string(data)

@@ -18,23 +18,22 @@ func (c UserReq) APIName() string {
 func (c UserReq) Params() map[string]string {
 	var m = make(map[string]string)
 	m["grant_type"] = c.GrantType
-	m["code"] = c.Code
-	m["refresh_token"] = c.RefreshToken
+	if c.GrantType == "authorization_code" {
+		m["code"] = c.Code
+	} else {
+		m["refresh_token"] = c.RefreshToken
+	}
 	return m
 }
 
 // ExtJSONParamName 返回名称
 func (c UserReq) ExtJSONParamName() string {
-	return "biz_content"
+	return ""
 }
 
 // ExtJSONParamValue 返回内容
 func (c UserReq) ExtJSONParamValue() string {
-	var bytes, err = json.Marshal(c)
-	if err != nil {
-		return ""
-	}
-	return string(bytes)
+	return ""
 }
 
 // UserResp 返回值
@@ -45,8 +44,8 @@ type UserResp struct {
 		AccessToken  string `json:"access_token"`
 		UserID       string `json:"user_id"`
 		AlipayUserID string `json:"alipay_user_id"` //用户的open_id（已废弃，请勿使用）
-		ExpiresIn    string `json:"expires_in"`     //令牌有效期：300秒
-		ReExpiresIn  string `json:"re_expires_in"`  // 刷新令牌有效期：300秒
+		ExpiresIn    int    `json:"expires_in"`     //令牌有效期：300秒
+		ReExpiresIn  int    `json:"re_expires_in"`  // 刷新令牌有效期：300秒
 		RefreshToken string `json:"refresh_token"`  // 刷新令牌
 	} `json:"alipay_system_oauth_token_response"`
 	Sign string `json:"sign"`
@@ -54,7 +53,7 @@ type UserResp struct {
 
 // IsSuccess 获取是否成功
 func (c *UserResp) IsSuccess() bool {
-	if c.Body.Code == K_SUCCESS_CODE {
+	if c.Body.Code == K_SUCCESS_CODE || c.Body.Code == "" {
 		return true
 	}
 	return false
@@ -79,7 +78,7 @@ func (c UserInfoReq) Params() map[string]string {
 
 // ExtJSONParamName 返回名称
 func (c UserInfoReq) ExtJSONParamName() string {
-	return "biz_content"
+	return ""
 }
 
 // ExtJSONParamValue 返回内容
@@ -106,7 +105,7 @@ type UserInfoResp struct {
 		UserType           string `json:"user_type"`
 		IsStudentCertified string `json:"is_student_certified"`
 		Gender             string `json:"gender"` // 性别
-	} `json:"alipay_system_oauth_token_response"`
+	} `json:"alipay_user_info_share_response"`
 	Sign string `json:"sign"`
 }
 
