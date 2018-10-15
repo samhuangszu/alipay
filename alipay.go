@@ -46,6 +46,9 @@ func New(appId, partnerId, aliPublicKey, privateKey string, appPublicKey string,
 	client.SignType = K_SIGN_TYPE_RSA2
 	return client
 }
+func (this *AliPay) GetAppID() string {
+	return this.appId
+}
 
 func (this *AliPay) URLValues(param AliPayParam) (value url.Values, err error) {
 	var p = url.Values{}

@@ -60,7 +60,6 @@ func GetTradeNotification(req *http.Request, aliPayPublicKey []byte) (noti *Trad
 	if req == nil {
 		return nil, errors.New("request 参数不能为空")
 	}
-
 	noti = &TradeNotification{}
 	noti.AppId = req.FormValue("app_id")
 	noti.AuthAppId = req.FormValue("auth_app_id")
