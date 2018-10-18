@@ -2,11 +2,11 @@ package alipay
 
 //Button 菜单按钮
 type Button struct {
-	Name        string    `json:"name,omitempty" goiot:"name"`
-	ActionType  string    `json:"action_type,omitempty" goiot:"actionType,omitempty"`
-	ActionParam string    `json:"action_param,omitempty" goiot:"actionParam,omitempty"`
-	Icon        string    `json:"icon,omitempty" goiot:"icon,omitempty"`
-	SubButtons  []*Button `json:"sub_button,omitempty" goiot:"subButton,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	ActionType  string    `json:"action_type,omitempty"`
+	ActionParam string    `json:"action_param,omitempty"`
+	Icon        string    `json:"icon,omitempty"`
+	SubButtons  []*Button `json:"sub_button,omitempty"`
 }
 
 //Menu https://docs.open.alipay.com/api_6/alipay.open.public.menu.modify
