@@ -3,16 +3,21 @@ package alipay
 import "errors"
 
 // Menu 设置菜单
-func (c *AliPay) Menu(menu *Menu) (*MenuResp, error) {
-	menuResp := &MenuResp{}
-	err := c.doRequest("POST", menu, menuResp)
+func (c *AliPay) Menu(menu *Menu) (MenuResp, error) {
+	var resp MenuResp
+	if menu.IsCreated {
+		resp = &MenuCreateResp{}
+	} else {
+		resp = &MenuModifyResp{}
+	}
+	err := c.doRequest("POST", menu, resp)
 	if err != nil {
 		return nil, err
 	}
-	if menuResp.IsSuccess() == false {
-		return nil, errors.New(menuResp.Body.Msg)
+	if resp.IsSuccess() == false {
+		return nil, errors.New(resp.Msg())
 	}
-	return menuResp, nil
+	return resp, nil
 }
 
 // QueryMenu 查询菜单
