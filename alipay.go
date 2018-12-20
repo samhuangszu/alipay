@@ -28,11 +28,11 @@ type AliPay struct {
 	SignType           string
 }
 
-func New(appId, partnerId, aliPublicKey, privateKey string, appPublicKey string, isProduction bool) (client *AliPay) {
+func New(appId, partnerId, aliPublicKey, appPrivateKey string, appPublicKey string, isProduction bool) (client *AliPay) {
 	client = &AliPay{}
 	client.appId = appId
 	client.partnerId = partnerId
-	client.appPrivateKey = encoding.ParsePrivateKey(privateKey)
+	client.appPrivateKey = encoding.ParsePrivateKey(appPrivateKey)
 	client.appPublicKey = encoding.ParsePublicKey(appPublicKey)
 	client.aliPayPublicKey = encoding.ParsePublicKey(aliPublicKey)
 	client.Client = http.DefaultClient
