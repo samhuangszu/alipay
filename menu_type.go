@@ -11,11 +11,15 @@ type Button struct {
 
 //Menu https://docs.open.alipay.com/api_6/alipay.open.public.menu.modify
 type Menu struct {
-	Button []*Button `json:"button"`
+	ShouldCreated bool      `json:"-"`
+	Button        []*Button `json:"button"`
 }
 
 // APIName 接口名
 func (c Menu) APIName() string {
+	if c.ShouldCreated {
+		return "alipay.open.public.menu.create"
+	}
 	return "alipay.open.public.menu.modify"
 }
 
