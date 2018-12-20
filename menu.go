@@ -14,9 +14,6 @@ func (c *AliPay) Menu(menu *Menu) (MenuResp, error) {
 	if err != nil {
 		return nil, err
 	}
-	if resp.IsSuccess() == false {
-		return nil, errors.New(resp.Msg())
-	}
 	return resp, nil
 }
 
