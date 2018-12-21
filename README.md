@@ -112,6 +112,7 @@
 	alipay.system.oauth.token
 
 * **获取用户基本信息**
+
 	alipay.user.info.share
 
 * **获取生活号基本信息**
