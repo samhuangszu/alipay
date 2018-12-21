@@ -16,9 +16,9 @@ type Template struct {
 
 // Context 消息上下文
 type Context struct {
-	HeadColor  string   `json:"head_color,omitempty"` //顶部色条的色值
-	URL        string   `json:"url"`                  // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
-	ActionName string   `json:"action_name"`          //底部链接描述文字，如“查看详情”
+	HeadColor  string   `json:"head_color"`  //顶部色条的色值
+	URL        string   `json:"url"`         // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
+	ActionName string   `json:"action_name"` //底部链接描述文字，如“查看详情”
 	Keyword1   DataItem `json:"keyword1,omitempty"`
 	Keyword2   DataItem `json:"keyword2,omitempty"`
 	Keyword3   DataItem `json:"keyword3,omitempty"`
