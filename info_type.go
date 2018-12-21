@@ -5,17 +5,24 @@ type InfoReq struct {
 	AppAuthToken string `json:"-"`
 }
 
+// APIName 接口名字
 func (c InfoReq) APIName() string {
 	return "alipay.open.public.info.query"
 }
+
+// Params 请求参数
 func (c InfoReq) Params() map[string]string {
 	var m = make(map[string]string)
 	m["app_auth_token"] = c.AppAuthToken
 	return m
 }
+
+// ExtJSONParamName ext字段名字
 func (c InfoReq) ExtJSONParamName() string {
 	return "biz_content"
 }
+
+// ExtJSONParamValue ext字段内容
 func (c InfoReq) ExtJSONParamValue() string {
 	return marshal(c)
 }
