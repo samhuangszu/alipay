@@ -163,8 +163,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 	if err != nil {
 		return err
 	}
-
-	return err
+	return nil
 }
 
 func (this *AliPay) DoRequest(method string, param AliPayParam, results interface{}) (err error) {
