@@ -107,7 +107,7 @@
 	
 	alipay.open.public.menu.batchquery
 	
-* **通过Auth_code换取accessToken
+* **通过Auth_code换取accessToken**
 	
 	alipay.system.oauth.token
 
