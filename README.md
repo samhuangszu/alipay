@@ -1,4 +1,4 @@
-基于https://github.comsmartwalle/alipay 项目扩展生活号功能
+基于https://github.com/smartwalle/alipay 项目扩展生活号功能
 
 ## 已实现接口
 
