@@ -1,19 +1,4 @@
-AliPay SDK for Golang
-
-
-## 鸣谢
-
-感谢下列人员对本项目的支持：
-
-[@wusphinx](https://github.com/wusphinx)
-
-[@clearluo](https://github.com/clearluo)
-
-[@zwh8800](https://github.com/zwh8800) 
-
-## 帮助
-
-在集成的过程中有遇到问题，欢迎加 QQ 群 564704807 讨论。
+基于https://github.comsmartwalle/alipay 项目扩展生活号功能
 
 ## 已实现接口
 
@@ -108,6 +93,42 @@ AliPay SDK for Golang
 * **通知内容转换及签名验证**
 	
 	将支付宝的通知内容转换为 Golang 的结构体，并且验证其合法性。
+
+#### 生活号
+* **创建默认菜单** 
+
+	alipay.open.public.menu.create
+	
+* **更新默认菜单**
+	
+	alipay.open.public.menu.modify
+
+* **默认菜单批量获取**
+	
+	alipay.open.public.menu.batchquery
+	
+* **通过Auth_code换取accessToken
+	
+	alipay.system.oauth.token
+
+* **获取用户基本信息**
+	alipay.user.info.share
+
+* **获取生活号基本信息**
+	
+	alipay.open.public.info.query
+	
+* **生活号网关验证**
+
+	生活号验证网关功能 VerifyGateWay
+
+* **消息模板领取接口**
+
+	alipay.open.public.template.message.get
+	
+* **单发模板消息**
+
+	alipay.open.public.message.single.send
 	
 ## 集成流程
 
