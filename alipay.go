@@ -131,7 +131,7 @@ func (this *AliPay) doRequest(method string, param AliPayParam, results interfac
 	if err != nil {
 		return err
 	}
-	fmt.Println("alipay method:" + method + "resp:" + string(data))
+	fmt.Println("alipay method:" + method + " resp:" + string(data))
 
 	if len(this.aliPayPublicKey) > 0 {
 		var dataStr = string(data)
