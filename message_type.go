@@ -3,9 +3,9 @@ package alipay
 //SendMessageReq 发送的模板消息内容
 //https://docs.open.alipay.com/api_6/alipay.open.public.message.single.send/
 type SendMessageReq struct {
-	AppAuthToken string   `json:"app_auth_token,omitempty"` //授权凭证
-	ToUserID     string   `json:"to_user_id"`               // 必须, ali_user_id
-	Template     Template `json:"template"`                 //必填，消息内容
+	AppAuthToken string   `json:"-"`          //授权凭证
+	ToUserID     string   `json:"to_user_id"` // 必须, ali_user_id
+	Template     Template `json:"template"`   //必填，消息内容
 }
 
 // Template 消息内容
@@ -75,8 +75,8 @@ func (c SendMessageResp) IsSuccess() bool {
 // GetTemplateReq 领取模版
 // https://docs.open.alipay.com/api_6/alipay.open.public.template.message.get/
 type GetTemplateReq struct {
-	TemplateID   string `json:"template_id"`              //公用模版ID：TM000000223
-	AppAuthToken string `json:"app_auth_token,omitempty"` //授权凭证
+	TemplateID   string `json:"template_id"` //公用模版ID：TM000000223
+	AppAuthToken string `json:"-"`           //授权凭证
 }
 
 // APIName 接口名字
