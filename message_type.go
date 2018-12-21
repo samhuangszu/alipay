@@ -112,7 +112,7 @@ type GetTemplateResp struct {
 		SubCode       string `json:"sub_code"`
 		SubMsg        string `json:"sub_msg"`
 		MsgTemplateID string `json:"msg_template_id"`
-	} `json:"alipay_open_public_message_single_send_response"`
+	} `json:"alipay_open_public_template_message_get_response"`
 	Sign string `json:"sign"`
 }
 
