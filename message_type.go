@@ -21,6 +21,9 @@ type Context struct {
 	ActionName string   `json:"action_name"`          //底部链接描述文字，如“查看详情”
 	Keyword1   DataItem `json:"keyword1,omitempty"`
 	Keyword2   DataItem `json:"keyword2,omitempty"`
+	Keyword3   DataItem `json:"keyword3,omitempty"`
+	Keyword4   DataItem `json:"keyword4,omitempty"`
+	Keyword5   DataItem `json:"keyword5,omitempty"`
 	First      DataItem `json:"first,omitempty"`
 	Remark     DataItem `json:"remark,omitempty"`
 }
