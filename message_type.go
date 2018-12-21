@@ -107,10 +107,11 @@ func (c GetTemplateReq) ExtJSONParamValue() string {
 // GetTemplateResp 消息响应
 type GetTemplateResp struct {
 	Body struct {
-		Code    string `json:"code"`
-		Msg     string `json:"msg"`
-		SubCode string `json:"sub_code"`
-		SubMsg  string `json:"sub_msg"`
+		Code          string `json:"code"`
+		Msg           string `json:"msg"`
+		SubCode       string `json:"sub_code"`
+		SubMsg        string `json:"sub_msg"`
+		MsgTemplateID string `json:"msg_template_id"`
 	} `json:"alipay_open_public_message_single_send_response"`
 	Sign string `json:"sign"`
 }
