@@ -130,6 +130,10 @@
 * **单发模板消息**
 
 	alipay.open.public.message.single.send
+
+* **带参推广二维码接口**
+  
+	alipay.open.public.qrcode.create
 	
 ## 集成流程
 

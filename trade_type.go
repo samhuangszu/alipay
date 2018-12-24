@@ -73,6 +73,7 @@ const (
 	K_TRADE_STATUS_TRADE_FINISHED = "TRADE_FINISHED" //（交易结束，不可退款）
 )
 
+// AliPayTradeQuery 交易查询
 // https://docs.open.alipay.com/api_1/alipay.trade.query/
 type AliPayTradeQuery struct {
 	AppAuthToken string `json:"-"`                      // 可选
