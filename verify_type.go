@@ -4,15 +4,16 @@ import "encoding/xml"
 
 // AliBizContent 验证网关
 type AliBizContent struct {
-	XMLName     xml.Name `xml:"XML"`
-	AppID       string   `xml:"AppId"`
-	FromUserID  string   `xml:"FromUserId"`
-	CreateTime  string   `xml:"CreateTime"`
-	MsgType     string   `xml:"MsgType"`
-	EventType   string   `xml:"EventTpye"`
-	ActionParam string   `xml:"ActionParam"`
-	AgreementID string   `xml:"AgreementId"`
-	AccountNo   string   `xml:"AccountNo"`
+	XMLName          xml.Name `xml:"XML"`
+	AppID            string   `xml:"AppId"`
+	FromUserID       string   `xml:"FromUserId"`
+	FromAlipayUserID string   `xml:"FromAlipayUserId"`
+	CreateTime       string   `xml:"CreateTime"`
+	MsgType          string   `xml:"MsgType"`
+	EventType        string   `xml:"EventTpye"`
+	ActionParam      string   `xml:"ActionParam"`
+	AgreementID      string   `xml:"AgreementId"`
+	AccountNo        string   `xml:"AccountNo"`
 }
 
 // AliForm 阿里返回

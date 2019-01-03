@@ -7,6 +7,23 @@ import (
 	"github.com/samhuangszu/alipay/encoding"
 )
 
+// VerifyCBMsg 验证回调消息签名
+func (c *AliPay) VerifyCBMsg(values url.Values) error {
+	signType := values.Get("sign_type")
+	if len(signType) <= 0 {
+		return errors.New("signType 为空")
+	}
+	bizContent := values.Get("biz_content")
+	if len(bizContent) <= 0 {
+		return errors.New("biz_content 为空")
+	}
+	_, err := c.VerifySign(values, true)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // VerifyGateWay 网关验证
 func (c *AliPay) VerifyGateWay(values url.Values) (string, error) {
 	signType := values.Get("sign_type")
