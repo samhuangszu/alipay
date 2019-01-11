@@ -24,6 +24,8 @@ type Context struct {
 	Keyword3   DataItem `json:"keyword3,omitempty"`
 	Keyword4   DataItem `json:"keyword4,omitempty"`
 	Keyword5   DataItem `json:"keyword5,omitempty"`
+	Keyword6   DataItem `json:"keyword6,omitempty"`
+	Keyword7   DataItem `json:"keyword7,omitempty"`
 	First      DataItem `json:"first,omitempty"`
 	Remark     DataItem `json:"remark,omitempty"`
 }
