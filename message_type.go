@@ -126,3 +126,101 @@ func (c GetTemplateResp) IsSuccess() bool {
 	}
 	return false
 }
+
+// IndustryReq 设置行业
+// https://docs.open.alipay.com/api_6/alipay.open.public.template.message.industry.modify
+type IndustryReq struct {
+	AppAuthToken          string `json:"-"` //授权凭证
+	PrimaryIndustryName   string `json:"primary_industry_name"`
+	PrimaryIndustryCode   string `json:"primary_industry_code"`
+	SecondaryIndustryCode string `json:"secondary_industry_code"`
+	SecondaryIndustryName string `json:"secondary_industry_name"`
+}
+
+// APIName 接口名字
+func (c IndustryReq) APIName() string {
+	return "alipay.open.public.template.message.industry.modify"
+}
+
+// Params 请求参数
+func (c IndustryReq) Params() map[string]string {
+	var m = make(map[string]string)
+	m["app_auth_token"] = c.AppAuthToken
+	return m
+}
+
+// ExtJSONParamName ext字段名字
+func (c IndustryReq) ExtJSONParamName() string {
+	return "biz_content"
+}
+
+// ExtJSONParamValue ext字段内容
+func (c IndustryReq) ExtJSONParamValue() string {
+	return marshal(c)
+}
+
+// IndustryResp 响应
+type IndustryResp struct {
+	Body struct {
+		Code    string `json:"code"`
+		Msg     string `json:"msg"`
+		SubCode string `json:"sub_code"`
+		SubMsg  string `json:"sub_msg"`
+	} `json:"alipay_open_public_template_message_industry_modify_response"`
+	Sign string `json:"sign"`
+}
+
+// IsSuccess 是否成功
+func (c IndustryResp) IsSuccess() bool {
+	if c.Body.Code == K_SUCCESS_CODE {
+		return true
+	}
+	return false
+}
+
+//IndustryQueryReq 查看是否设置行业
+// https://docs.open.alipay.com/api_6/alipay.open.public.setting.category.query/
+type IndustryQueryReq struct {
+	AppAuthToken string `json:"-"` //授权凭证
+}
+
+// APIName 接口名字
+func (c IndustryQueryReq) APIName() string {
+	return "alipay.open.public.setting.category.query"
+}
+
+// Params 请求参数
+func (c IndustryQueryReq) Params() map[string]string {
+	var m = make(map[string]string)
+	m["app_auth_token"] = c.AppAuthToken
+	return m
+}
+
+// ExtJSONParamName ext字段名字
+func (c IndustryQueryReq) ExtJSONParamName() string {
+	return "biz_content"
+}
+
+// ExtJSONParamValue ext字段内容
+func (c IndustryQueryReq) ExtJSONParamValue() string {
+	return marshal(c)
+}
+
+// IndustryQueryResp 响应
+type IndustryQueryResp struct {
+	Body struct {
+		Code    string `json:"code"`
+		Msg     string `json:"msg"`
+		SubCode string `json:"sub_code"`
+		SubMsg  string `json:"sub_msg"`
+	} `json:"alipay_open_public_setting_category_query_response"`
+	Sign string `json:"sign"`
+}
+
+// IsSuccess 是否成功
+func (c IndustryQueryResp) IsSuccess() bool {
+	if c.Body.Code == K_SUCCESS_CODE {
+		return true
+	}
+	return false
+}

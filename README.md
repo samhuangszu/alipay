@@ -134,6 +134,15 @@
 * **带参推广二维码接口**
   
 	alipay.open.public.qrcode.create
+
+
+* **生活号查询行业设置接口**
+  
+	alipay.open.public.setting.category.query
+
+* **模板消息行业设置修改接口**
+  
+	alipay.open.public.template.message.industry.modify
 	
 ## 集成流程
 
