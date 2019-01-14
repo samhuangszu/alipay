@@ -209,17 +209,19 @@ func (c IndustryQueryReq) ExtJSONParamValue() string {
 // IndustryQueryResp 响应
 type IndustryQueryResp struct {
 	Body struct {
-		Code    string `json:"code"`
-		Msg     string `json:"msg"`
-		SubCode string `json:"sub_code"`
-		SubMsg  string `json:"sub_msg"`
+		Code              string `json:"code"`
+		Msg               string `json:"msg"`
+		SubCode           string `json:"sub_code"`
+		SubMsg            string `json:"sub_msg"`
+		PrimaryCategory   string `json:"primary_category"`
+		SecondaryCategory string `json:"secondary_category"`
 	} `json:"alipay_open_public_setting_category_query_response"`
 	Sign string `json:"sign"`
 }
 
 // IsSuccess 是否成功
 func (c IndustryQueryResp) IsSuccess() bool {
-	if c.Body.Code == K_SUCCESS_CODE {
+	if c.Body.Code == K_SUCCESS_CODE && len(c.Body.PrimaryCategory) > 0 {
 		return true
 	}
 	return false
