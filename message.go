@@ -1,5 +1,14 @@
 package alipay
 
+// GroupMessageSend 群发消息
+func (c *AliPay) GroupMessageSend(req *GroupMessageReq) (*GroupMessageResp, error) {
+	resp := &GroupMessageResp{}
+	if err := c.doRequest("POST", req, resp); err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 // ModifyIndustry 更改行业
 func (c *AliPay) ModifyIndustry(req *IndustryReq) (*IndustryResp, error) {
 	resp := &IndustryResp{}

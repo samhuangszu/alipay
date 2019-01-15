@@ -226,3 +226,68 @@ func (c IndustryQueryResp) IsSuccess() bool {
 	}
 	return false
 }
+
+// GroupMessageReq 群发消息
+// https://docs.open.alipay.com/api_6/alipay.open.public.message.total.send/
+type GroupMessageReq struct {
+	AppAuthToken string     `json:"-"`        //授权凭证
+	MsgType      string     `json:"msg_type"` //消息类型，text：文本消息，image-text：图文消息
+	Articles     []*Article `json:"articles,omitempty"`
+	Text         *Text      `json:"text,omitempty"`
+}
+
+// Article 图文
+type Article struct {
+	Title      string `json:"title,omitemtpy"`
+	Desc       string `json:"desc"`
+	ImageURL   string `json:"image_url"`
+	URL        string `json:"url"`
+	ActionName string `json:"action_name,omitempty"` //链接文字
+}
+
+// Text 文本
+type Text struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+// APIName 接口名字
+func (c GroupMessageReq) APIName() string {
+	return "alipay.open.public.message.total.send"
+}
+
+// Params 请求参数
+func (c GroupMessageReq) Params() map[string]string {
+	var m = make(map[string]string)
+	m["app_auth_token"] = c.AppAuthToken
+	return m
+}
+
+// ExtJSONParamName ext字段名字
+func (c GroupMessageReq) ExtJSONParamName() string {
+	return "biz_content"
+}
+
+// ExtJSONParamValue ext字段内容
+func (c GroupMessageReq) ExtJSONParamValue() string {
+	return marshal(c)
+}
+
+// GroupMessageResp 响应
+type GroupMessageResp struct {
+	Body struct {
+		Code    string `json:"code"`
+		Msg     string `json:"msg"`
+		SubCode string `json:"sub_code"`
+		SubMsg  string `json:"sub_msg"`
+	} `json:"alipay_open_public_message_total_send_response"`
+	Sign string `json:"sign"`
+}
+
+// IsSuccess 是否成功
+func (c GroupMessageResp) IsSuccess() bool {
+	if c.Body.Code == K_SUCCESS_CODE {
+		return true
+	}
+	return false
+}

@@ -143,6 +143,10 @@
 * **模板消息行业设置修改接口**
   
 	alipay.open.public.template.message.industry.modify
+
+* **生活号群发消息**
+  
+	alipay.open.public.message.total.send
 	
 ## 集成流程
 
