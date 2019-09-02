@@ -203,6 +203,13 @@ type AliPayTradeCloseResponse struct {
 	Sign string `json:"sign"`
 }
 
+func (this *AliPayTradeCloseResponse) IsSuccess() bool {
+	if this.AliPayTradeClose.Code == K_SUCCESS_CODE {
+		return true
+	}
+	return false
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // https://docs.open.alipay.com/api_1/alipay.trade.refund/
 type AliPayTradeRefund struct {
