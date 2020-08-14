@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 )
 
+// AliPayParam 构造参数接口
 type AliPayParam interface {
 	// 用于提供访问的 method
 	APIName() string

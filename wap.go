@@ -1,34 +1,18 @@
 package alipay
 
 import (
-	"io/ioutil"
-	"net/http"
-	"strings"
+	"net/url"
 )
 
-// TradeWapPay https://docs.open.alipay.com/api_1/alipay.trade.wap.pay/
-func (this *AliPay) TradeWapPay(param AliPayTradeWapPay) (resp []byte, err error) {
-	p, err := this.URLValues(param)
+// TradeWapPay 手机网站支付接口 https://docs.open.alipay.com/api_1/alipay.trade.wap.pay/
+func (c *AliPay) TradeWapPay(param TradeWapPay) (result *url.URL, err error) {
+	p, err := c.URLValues(param)
 	if err != nil {
 		return nil, err
 	}
-	var buf = strings.NewReader(p.Encode())
-
-	req, err := http.NewRequest("POST", this.apiDomain, buf)
+	result, err = url.Parse(c.apiDomain + "?" + p.Encode())
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Content-Type", K_CONTENT_TYPE_FORM)
-
-	rep, err := this.Client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer rep.Body.Close()
-
-	if err != nil {
-		return nil, err
-	}
-	data, err := ioutil.ReadAll(rep.Body)
-	return data, err
+	return result, err
 }
